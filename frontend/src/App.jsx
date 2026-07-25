@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';  // useState - data that can change, useEffect - runs code after component load
+import { useEffect, useState } from 'react'; // useState - data that can change, useEffect - runs code after component load
 import AddForm from './components/AddForm';
 import ApplicationList from './components/ApplicationList';
+import Dashboard from './components/Dashboard';
 
 const API = 'http://localhost:3001/api';
 
@@ -41,6 +42,8 @@ function App() {
     <div className="min-h-screen bg-orange-50 py-10 px-6">
       <div className="max-w-3xl mx-auto flex flex-col gap-6">
         <h1 className="text-3xl font-bold text-gray-800">🎯 Job Tracker</h1>
+
+        <Dashboard applications={applications} />
 
         <AddForm onAdd={addApplication} />
 

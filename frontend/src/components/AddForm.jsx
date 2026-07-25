@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 const categories = [
+  ' ',
   'SWE',
   'ML/AI',
   'DS',
@@ -36,7 +37,7 @@ function AddForm({ onAdd }) {
   const [form, setForm] = useState({
     company: '',
     role: '',
-    category: '',
+    category: 'SWE',
     applied_date: new Date().toISOString().slice(0, 10),
     referral: false,
   });
