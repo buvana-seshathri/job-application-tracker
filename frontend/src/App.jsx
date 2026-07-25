@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react'; // useState - data that can change, useEffect - runs code after component load
+import { useEffect, useState } from 'react';  // useState - data that can change, useEffect - runs code after component load
+import AddForm from './components/AddForm';
+import ApplicationList from './components/ApplicationList';
 
 const API = 'http://localhost:3001/api';
 
 function App() {
   const [applications, setApplications] = useState([]);
-  const [form, setForm] = useState({ company: '', role: '', category: '', applied_date: '' });
 
   const loadApplications = () => {
     fetch(`${API}/applications`)
@@ -16,20 +17,12 @@ function App() {
     loadApplications();
   }, []);
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value }); // ...form -> copy all the previous data and just update one change mentioned
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault(); // prevent the defualt action -> submit then reload page; instead call loadApplications() -> refresh without complete page reload
+  const addApplication = (form) => {
     fetch(`${API}/applications`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(form),
-    }).then(() => {
-      setForm({ company: '', role: '', category: '', applied_date: '' });
-      loadApplications();
-    });
+    }).then(loadApplications);
   };
 
   const updateStatus = (id, status) => {
@@ -45,34 +38,18 @@ function App() {
   };
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-      <h1>Job Tracker (Phase 2)</h1>
+    <div className="min-h-screen bg-orange-50 py-10 px-6">
+      <div className="max-w-3xl mx-auto flex flex-col gap-6">
+        <h1 className="text-3xl font-bold text-gray-800">🎯 Job Tracker</h1>
 
-      <form onSubmit={handleSubmit}>
-        <input name="company" placeholder="Company" value={form.company} onChange={handleChange} required />
-        <input name="role" placeholder="Role" value={form.role} onChange={handleChange} required />
-        <input name="category" placeholder="Category (e.g. SDE)" value={form.category} onChange={handleChange} required />
-        <input name="applied_date" type="date" value={form.applied_date} onChange={handleChange} required />
-        <button type="submit">Add Application</button>
-      </form>
+        <AddForm onAdd={addApplication} />
 
-      <hr />
-
-      <ul>
-        {applications.map((app) => (
-          <li key={app.id}>
-            <b>{app.company}</b> — {app.role} ({app.category}) — status: {app.status}
-            <select value={app.status} onChange={(e) => updateStatus(app.id, e.target.value)}>
-              <option value="submitted">submitted</option>
-              <option value="callback">callback</option>
-              <option value="interviewing">interviewing</option>
-              <option value="offer">offer</option>
-              <option value="rejected">rejected</option>
-            </select>
-            <button onClick={() => deleteApplication(app.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+        <ApplicationList
+          applications={applications}
+          onStatusChange={updateStatus}
+          onDelete={deleteApplication}
+        />
+      </div>
     </div>
   );
 }
