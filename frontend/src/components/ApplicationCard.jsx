@@ -1,12 +1,14 @@
-const statusStyles = {
-  submitted: 'bg-blue-100 text-blue-700',
-  callback: 'bg-purple-100 text-purple-700',
-  interviewing: 'bg-yellow-100 text-yellow-700',
-  offer: 'bg-green-100 text-green-700',
-  rejected: 'bg-red-100 text-red-700',
-};
+import StatusProgress, { STAGE_KEYS, STAGE_LABELS } from './StatusProgress';
+
+function nextStage(status) {
+  const i = STAGE_KEYS.indexOf(status);
+  if (i === -1 || i === STAGE_KEYS.length - 1) return null; // already rejected or at offer
+  return STAGE_KEYS[i + 1];
+}
 
 function ApplicationCard({ app, onStatusChange, onDelete }) {
+  const next = nextStage(app.status);
+
   return (
     <div className="bg-white rounded-2xl shadow-sm p-4 flex items-center justify-between gap-4">
       <div>
@@ -17,20 +19,28 @@ function ApplicationCard({ app, onStatusChange, onDelete }) {
         <p className="text-xs text-gray-400">Applied {app.applied_date}</p>
       </div>
 
-      <div className="flex items-center gap-3">
-        <span className={`text-xs font-medium px-3 py-1 rounded-full ${statusStyles[app.status]}`}>
-          {app.status}
-        </span>
+      <div className="flex items-center gap-4">
+        <StatusProgress status={app.status} />
 
-        <select
-          value={app.status}
-          onChange={(e) => onStatusChange(app.id, e.target.value)}
-          className="text-sm border border-gray-200 rounded-lg px-2 py-1"
-        >
-          {Object.keys(statusStyles).map((s) => (
-            <option key={s} value={s}>{s}</option>
-          ))}
-        </select>
+        {app.status === 'offer' && <span className="text-lg">🎉</span>}
+
+        {next && (
+          <button
+            onClick={() => onStatusChange(app.id, next)}
+            className="text-xs font-medium bg-purple-100 text-purple-700 hover:bg-purple-200 rounded-full px-3 py-1"
+          >
+            Advance to {STAGE_LABELS[next]} →
+          </button>
+        )}
+
+        {app.status !== 'rejected' && app.status !== 'offer' && (
+          <button
+            onClick={() => onStatusChange(app.id, 'rejected')}
+            className="text-xs text-gray-400 hover:text-red-500"
+          >
+            Mark rejected
+          </button>
+        )}
 
         <button
           onClick={() => onDelete(app.id)}
