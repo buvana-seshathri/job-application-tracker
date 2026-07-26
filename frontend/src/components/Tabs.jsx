@@ -1,7 +1,7 @@
 const TABS = [
   { key: 'dashboard', label: '📊 Dashboard' },
   { key: 'applications', label: '📋 Applications' },
-  { key: 'reachouts', label: '🔗 Networking' },
+  { key: 'reachouts', label: '🌐 Networking' },
 ];
 
 function Tabs({ active, onChange }) {

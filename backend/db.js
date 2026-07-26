@@ -19,7 +19,7 @@ db.serialize(() => {
   `);
 
   db.run(`
-    CREATE TABLE IF NOT EXISTS linkedin_reachouts (
+    CREATE TABLE IF NOT EXISTS reachouts (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       person_name TEXT,
       company TEXT,

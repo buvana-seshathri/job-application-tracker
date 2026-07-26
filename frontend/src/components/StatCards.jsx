@@ -21,22 +21,26 @@ function StatCards({ applications }) {
   const perWeek = earliestDate ? (total / weeksSince(earliestDate)).toFixed(1) : '0';
 
   const cards = [
-    { label: 'Total Applications', value: total, color: 'bg-blue-100 text-blue-700' },
-    { label: 'Active Pipeline', value: active, color: 'bg-indigo-100 text-indigo-700' },
-    { label: 'Offers', value: offers, color: 'bg-green-100 text-green-700' },
-    { label: 'Rejected', value: rejected, color: 'bg-red-100 text-red-700' },
-    { label: 'Response Rate', value: `${percent(responded, total)}%`, color: 'bg-purple-100 text-purple-700' },
-    { label: 'Offer Rate', value: `${percent(offers, total)}%`, color: 'bg-emerald-100 text-emerald-700' },
-    { label: 'Referral Rate', value: `${percent(referrals, total)}%`, color: 'bg-yellow-100 text-yellow-700' },
-    { label: 'Applications / Week', value: perWeek, color: 'bg-orange-100 text-orange-700' },
+    { label: 'Total Applications', value: total, icon: '📨', border: 'border-blue-400', bg: 'bg-blue-50', text: 'text-blue-700' },
+    { label: 'Active Pipeline', value: active, icon: '⚡', border: 'border-indigo-400', bg: 'bg-indigo-50', text: 'text-indigo-700' },
+    { label: 'Offers', value: offers, icon: '🏆', border: 'border-green-400', bg: 'bg-green-50', text: 'text-green-700' },
+    { label: 'Rejected', value: rejected, icon: '💔', border: 'border-red-400', bg: 'bg-red-50', text: 'text-red-700' },
+    { label: 'Response Rate', value: `${percent(responded, total)}%`, icon: '📈', border: 'border-purple-400', bg: 'bg-purple-50', text: 'text-purple-700' },
+    { label: 'Offer Rate', value: `${percent(offers, total)}%`, icon: '🎯', border: 'border-emerald-400', bg: 'bg-emerald-50', text: 'text-emerald-700' },
+    { label: 'Referral Rate', value: `${percent(referrals, total)}%`, icon: '🤝', border: 'border-yellow-400', bg: 'bg-yellow-50', text: 'text-yellow-700' },
+    { label: 'Apps / Week', value: perWeek, icon: '🔥', border: 'border-orange-400', bg: 'bg-orange-50', text: 'text-orange-700' },
   ];
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
       {cards.map((card) => (
-        <div key={card.label} className={`rounded-2xl p-4 text-center ${card.color}`}>
-          <p className="text-2xl font-bold">{card.value}</p>
-          <p className="text-sm">{card.label}</p>
+        <div
+          key={card.label}
+          className={`rounded-2xl p-4 text-center ${card.bg} border-b-4 ${card.border} hover:-translate-y-0.5 transition-transform`}
+        >
+          <p className="text-2xl mb-1">{card.icon}</p>
+          <p className={`text-2xl font-extrabold ${card.text}`}>{card.value}</p>
+          <p className="text-xs text-gray-500 font-medium">{card.label}</p>
         </div>
       ))}
     </div>

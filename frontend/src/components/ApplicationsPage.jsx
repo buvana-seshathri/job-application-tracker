@@ -18,7 +18,9 @@ function ApplicationsPage({ applications, onAdd, onStatusChange, onDelete }) {
     <div className="flex flex-col gap-4">
       <AddForm onAdd={onAdd} />
       <FilterBar filters={filters} onChange={setFilters} />
-      <p className="text-sm text-gray-400">{filtered.length} of {applications.length} applications</p>
+      <p className="text-sm font-medium text-purple-600 bg-purple-50 rounded-full px-4 py-1.5 w-fit">
+        📋 {filtered.length} of {applications.length} applications
+      </p>
       <ApplicationList applications={filtered} onStatusChange={onStatusChange} onDelete={onDelete} />
     </div>
   );

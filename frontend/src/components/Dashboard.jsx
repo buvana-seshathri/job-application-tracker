@@ -2,11 +2,14 @@ import StatCards from './StatCards';
 import CategoryPieChart from './CategoryPieChart';
 import StatusBarChart from './StatusBarChart';
 import ActivityHeatmap from './ActivityHeatmap';
+import Badges from './Badges';
 
-function Dashboard({ applications }) {
+function Dashboard({ applications, reachouts }) {
   return (
     <div className="flex flex-col gap-4">
       <StatCards applications={applications} />
+
+      <Badges applications={applications} reachouts={reachouts} />
 
       <div className="grid sm:grid-cols-2 gap-4">
         <div className="bg-white rounded-2xl shadow-sm p-4">

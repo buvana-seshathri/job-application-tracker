@@ -12,17 +12,20 @@ function ReachoutsPage({ reachouts, onAdd, onToggleResponse, onDelete }) {
       <ReachoutForm onAdd={onAdd} />
 
       <div className="grid grid-cols-3 gap-4">
-        <div className="rounded-2xl p-4 text-center bg-blue-100 text-blue-700">
-          <p className="text-2xl font-bold">{total}</p>
-          <p className="text-sm">Reached Out</p>
+        <div className="rounded-2xl p-4 text-center bg-blue-50 border-b-4 border-blue-400 hover:-translate-y-0.5 transition-transform">
+          <p className="text-2xl mb-1">📤</p>
+          <p className="text-2xl font-extrabold text-blue-700">{total}</p>
+          <p className="text-xs text-gray-500 font-medium">Reached Out</p>
         </div>
-        <div className="rounded-2xl p-4 text-center bg-green-100 text-green-700">
-          <p className="text-2xl font-bold">{responded}</p>
-          <p className="text-sm">Got Response</p>
+        <div className="rounded-2xl p-4 text-center bg-green-50 border-b-4 border-green-400 hover:-translate-y-0.5 transition-transform">
+          <p className="text-2xl mb-1">💬</p>
+          <p className="text-2xl font-extrabold text-green-700">{responded}</p>
+          <p className="text-xs text-gray-500 font-medium">Got Response</p>
         </div>
-        <div className="rounded-2xl p-4 text-center bg-purple-100 text-purple-700">
-          <p className="text-2xl font-bold">{responseRate}%</p>
-          <p className="text-sm">Response Rate</p>
+        <div className="rounded-2xl p-4 text-center bg-purple-50 border-b-4 border-purple-400 hover:-translate-y-0.5 transition-transform">
+          <p className="text-2xl mb-1">📈</p>
+          <p className="text-2xl font-extrabold text-purple-700">{responseRate}%</p>
+          <p className="text-xs text-gray-500 font-medium">Response Rate</p>
         </div>
       </div>
 

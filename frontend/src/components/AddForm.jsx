@@ -37,7 +37,7 @@ function AddForm({ onAdd }) {
   const [form, setForm] = useState({
     company: '',
     role: '',
-    category: 'SWE',
+    category: 'SDE',
     applied_date: new Date().toISOString().slice(0, 10),
     referral: false,
   });
@@ -56,7 +56,7 @@ function AddForm({ onAdd }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white rounded-2xl shadow-sm p-6 flex flex-wrap gap-3 items-end"
+      className="bg-white rounded-2xl shadow-sm p-6 flex flex-wrap gap-3 items-end border-2 border-purple-100"
     >
       <div className="flex flex-col">
         <label className="text-sm text-gray-500 mb-1">Company</label>
@@ -112,9 +112,9 @@ function AddForm({ onAdd }) {
 
       <button
         type="submit"
-        className="bg-purple-500 hover:bg-purple-600 text-white font-medium rounded-lg px-5 py-2 transition-colors"
+        className="bg-purple-500 hover:bg-purple-600 text-white font-bold rounded-full px-5 py-2 shadow-sm transition-colors"
       >
-        Add Application
+        + Add Application
       </button>
     </form>
   );
