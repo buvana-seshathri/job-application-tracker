@@ -1,7 +1,52 @@
+const DAILY_WARMUP_GOAL = 5;
+const DAILY_GRIND_GOAL = 10;
+const STREAK_GOAL = 3; // consecutive days hitting the warm-up goal
+
+function todayStr() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function countOnDate(applications, dateStr) {
+  return applications.filter((a) => a.applied_date === dateStr).length;
+}
+
+// Walks backward from today counting consecutive days that hit `dailyGoal`.
+// Stops at the first day that misses it — so this resets naturally if you skip a day.
+function currentStreak(applications, dailyGoal) {
+  let streak = 0;
+  for (let i = 0; ; i++) {
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const dateStr = d.toISOString().slice(0, 10);
+    if (countOnDate(applications, dateStr) >= dailyGoal) {
+      streak++;
+    } else {
+      break;
+    }
+  }
+  return streak;
+}
+
 const BADGES = [
   { id: 'first_app', label: 'First Application', emoji: '🚀', check: (a) => a.length >= 1 },
-  { id: 'five_apps', label: '5 Applications', emoji: '📨', check: (a) => a.length >= 5 },
-  { id: 'ten_apps', label: '10 Applications', emoji: '💪', check: (a) => a.length >= 10 },
+  {
+    id: 'daily_warmup',
+    label: `${DAILY_WARMUP_GOAL} Today`,
+    emoji: '📨',
+    check: (a) => countOnDate(a, todayStr()) >= DAILY_WARMUP_GOAL,
+  },
+  {
+    id: 'daily_grind',
+    label: `${DAILY_GRIND_GOAL} Today`,
+    emoji: '💪',
+    check: (a) => countOnDate(a, todayStr()) >= DAILY_GRIND_GOAL,
+  },
+  {
+    id: 'streak',
+    label: `${STREAK_GOAL}-Day Streak`,
+    emoji: '🔥',
+    check: (a) => currentStreak(a, DAILY_WARMUP_GOAL) >= STREAK_GOAL,
+  },
   {
     id: 'first_callback',
     label: 'First Callback',
